@@ -28,7 +28,7 @@ namespace AsyncExample
 
             // Anti-Pattern #5: Missing ConfigureAwait(false)
             // The above code can cause deadlocks if any async method is not configured with ConfigureAwait(false)
-            // In dot net core this is no longer the case, although this setting is still recommended when creating Nuget packages
+            // In dot net core this is usually no longer the case, although this setting is still recommended when creating Nuget packages
 
             // Anti-Pattern #6: Mixing Foreach with async
             var list = new List<bool>{true};
