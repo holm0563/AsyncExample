@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,6 +11,9 @@ namespace AsyncExample
     {
         private static async Task Main(string[] args)
         {
+            // Nested nature of async (Task switch this to be async)
+            BusinessLogic();
+
             // Anti-Pattern #1: Forgotten await.
             SleepAsync();
             var t = BoolAsync();
@@ -63,10 +67,7 @@ namespace AsyncExample
             }
         }
 
-        public static async Task SleepAsync()
-        {
-            await Task.Run(() => { Thread.Sleep(10); });
-        }
+       
 
         public static async Task<bool> BoolAsync()
         {
@@ -102,6 +103,28 @@ namespace AsyncExample
             Thread.Sleep(50);
 
             results.Add(true);
+        }
+
+        public static void BusinessLogic()
+        {
+            // do work
+
+            ValidationLogic();
+        }
+
+        public static void ValidationLogic()
+        {
+            // do work
+
+            Sleep();
+
+            //Step 1
+            //SleepAsync().Wait();
+        }
+
+        public static async Task SleepAsync()
+        {
+            await Task.Run(() => { Thread.Sleep(10); });
         }
 
 
