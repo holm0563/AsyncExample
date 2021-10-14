@@ -15,16 +15,16 @@ namespace AsyncExample
             BusinessLogic();
 
             // Anti-Pattern #1: Forgotten await.
-            SleepAsync();
-            var t = BoolAsync();
-            Sleep();
+            // AntiPatternForgottenAwait();
+
 
             // Anti-Pattern #2: Ignoring async task
-            LongRunningTask(); //Not so cleverly run this in the background and miss the exception
+            //LongRunningTask(); //Not so cleverly run this in the background and miss the exception
+            //Environment.Exit(0);
 
             // Anti-Pattern #3: Async void
-            // asyncVoid(); //Also can miss the exception
-            // return;
+            //AsyncVoid(); //Also can miss the exception
+            //Environment.Exit(0);
 
             // Anti-Pattern #4: Blocking calls
             var result = BoolAsync().Result; //Wait is the same for void methods
@@ -37,8 +37,9 @@ namespace AsyncExample
             // Anti-Pattern #6: Mixing Foreach with async
             var list = new List<bool>{true};
             // list.ForEach(b=>LongRunningTask(b)); //not waiting for result
+            // Environment.Exit(0);
             // list.ForEach(async b=> await LongRunningTask(b)); //still wont always handle error if returned immediately
-            // return;
+            // Environment.Exit(0);
 
             // Anti-Pattern #7: Excessive parallelization
             // array.ToDictionaryAsync, or 
@@ -52,6 +53,14 @@ namespace AsyncExample
 
             await AntiPattern9();
 
+        }
+
+        private static void AntiPatternForgottenAwait()
+        {
+            // Hopefully your editor highlights the issue in the line below.
+            SleepAsync();
+            // Hopefully your editor highlights the issue in the line below.
+            var t = BoolAsync();
         }
 
         public static Task AntiPattern9()
@@ -81,6 +90,7 @@ namespace AsyncExample
         public static async Task LongRunningTask(bool result = false)
         {
             await Task.Run(() => throw new ArgumentNullException());
+
         }
 
         public static async void AsyncVoid()
